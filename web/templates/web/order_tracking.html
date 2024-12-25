@@ -1,0 +1,50 @@
+{# templates/order_tracking.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12">
+    <div class="bg-white shadow rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Order #{{ order.tracking_number }}</h1>
+            <span class="px-4 py-2 rounded-full 
+                       {% if order.current_status == 'delivered' %}bg-green-100 text-green-800
+                       {% else %}bg-blue-100 text-blue-800{% endif %}">
+                {{ order.get_current_status_display }}
+            </span>
+        </div>
+
+        <div class="space-y-8">
+            <div class="flex justify-between text-sm">
+                <span>Estimated Delivery:</span>
+                <span class="font-semibold">{{ order.estimated_delivery|date:"M d, Y" }}</span>
+            </div>
+
+            <div class="relative">
+                {% for status in order.status_updates.all %}
+                <div class="flex items-start mb-8">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full 
+                              {% if forloop.first %}bg-green-500{% else %}bg-gray-300{% endif %} 
+                              flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <h3 class="font-semibold">{{ status.get_status_display }}</h3>
+                        <p class="text-sm text-gray-500">{{ status.timestamp|date:"M d, Y H:i" }}</p>
+                        {% if status.location %}
+                        <p class="text-sm">{{ status.location }}</p>
+                        {% endif %}
+                        {% if status.description %}
+                        <p class="text-sm text-gray-600 mt-1">{{ status.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <div class="absolute top-0 bottom-0 left-4 w-px bg-gray-200 -z-10"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

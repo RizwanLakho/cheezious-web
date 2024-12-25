@@ -1,0 +1,23 @@
+{# templates/track_order.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12">
+    <h1 class="text-3xl font-bold mb-8 text-center">Track Your Order</h1>
+    
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div class="flex gap-4">
+            <input type="text" name="tracking_number" 
+                   placeholder="Enter tracking number" 
+                   class="flex-1 rounded-lg border-gray-300"
+                   required>
+            <button type="submit" 
+                    class="px-6 py-2 bg-red-600 text-black border  rounded-lg">
+                Track
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

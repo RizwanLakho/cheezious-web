@@ -1,0 +1,428 @@
+{% load static tailwind_tags %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    {% tailwind_css %}
+  </head>
+  <body class="bg-gray-50">
+    <header
+      class="px-10 py-4 flex items-center sticky top-0 bg-white z-50 shadow-md"
+    >
+      <div id="menuBtn">
+        <img
+          src="{% static 'imgs/cheezious/stack.webp'%}"
+          alt="hum-burger"
+          class="w-7 h-7 mr-3 cursor-pointer"
+        />
+      </div>
+
+      <nav class="flex justify-between items-center w-full">
+        <div class="logo">
+          <a href="{%url 'home'%}">
+            <img
+              class="w-48"
+              src="{% static 'imgs/cheezious/mainLogo.png' %}"
+              alt="logo"
+          /></a>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="items-center gap-4">
+          <!-- Desktop Buttons -->
+          <div class="hidden gap-6 md:flex">
+            <a href="{% url 'cart'  %}"
+              class="md:flex items-center bg-yellow-300 py-[9px] px-7 rounded-lg uppercase relative"
+            >
+            <i class="fa-solid fa-cart-shopping mr-2"></i>
+              Cart
+              {% comment %} <span
+                class="absolute top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+                >0</span
+              > {% endcomment %}
+            </a>
+
+            <a
+              href="{% url 'login'%}"
+              class="md:flex items-center bg-red-600 py-[9px] px-7 rounded-lg uppercase"
+            >
+
+              <i class="fa-solid fa-user mr-2"></i>
+              logout
+            </a>
+          </div>
+
+          <!-- Mobile Icons -->
+          <div class="flex items-center gap-6 md:hidden">
+            <a href="{% url 'cart'  %}" class="text-xl relative">
+              <i class="fa-solid fa-shopping-cart"></i>
+              {% comment %} <span
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
+                >0</span
+              > {% endcomment %}
+            </a>
+
+            <a href="{% url 'login'%}" class="text-xl">
+              <i class="fa-solid fa-user"></i>
+            </a>
+          </div>
+        </div>
+      
+        {% else %}
+        <div class="items-center gap-4">
+          <!-- Desktop Buttons -->
+          <div class="hidden gap-6 md:flex">
+            <a href="{% url 'cart'  %}"
+              class="md:flex items-center bg-yellow-300 py-[9px] px-7 rounded-lg uppercase relative"
+            >
+              <i class="fa-solid fa-user mr-2"></i>
+              Cart
+              {% comment %} <span
+                class="absolute top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+                >0</span
+              > {% endcomment %}
+            </a>
+
+            <a
+              href="{% url 'login'%}"
+              class="md:flex items-center bg-yellow-300 py-[9px] px-7 rounded-lg uppercase"
+            >
+              <i class="fa-solid fa-cart-shopping mr-2"></i>
+              Login
+            </a>
+          </div>
+
+          <!-- Mobile Icons -->
+          <div class="flex items-center gap-6 md:hidden">
+            <a href="{% url 'login'  %}" class="text-xl relative">
+              <i class="fa-solid fa-user"></i>
+              {% comment %} <span
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full"
+                >0</span
+              > {% endcomment %}
+            </a>
+
+            <a href="{% url 'cart'  %}" class="text-xl">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+          </div>
+        </div>
+        {% endif %}
+      </nav>
+    </header>
+    <div
+      id="menu"
+      class="md:w-[27vw] h-[100%] -mt-[76px] flex flex-col bg-white justify-between absolute"
+    >
+      <div class="py-24 px-12">
+        <div>
+          <div class="flex items-center">
+            <img src="{%static 'imgs/cheezious/user1.svg'%}" alt="user" />
+            <div class="ml-4">
+              <p class="font-light text-[15px]">login to explore</p>
+              <h4 class="font-semibold text-[16px]">World of flavors</h4>
+            </div>
+          </div>
+          <a
+            href="{% url 'login'%}"
+            class="inline-block py-2 px-4 text-[14px] font-semibold rounded-lg uppercase mt-8 border border-black hover:bg-[#F15A24] transition-all"
+          >
+            login
+          </a>
+        </div>
+        <hr class="my-6" />
+
+        <div>
+          <a href="{% url 'menu'  %}" class="flex mb-4 text-[16px] items-center"
+            ><img
+              class="mr-4"
+              src="{%static 'imgs/cheezious/square.svg'%}"
+              alt="menu"
+            />
+            Explore Menu</a
+          >
+          <a href="{% url 'branches'  %}" class="flex text-[16px]"
+            ><img
+              class="mr-4"
+              src="{%static 'imgs/cheezious/store.svg'%}"
+              alt="store"
+            />
+            Branch Locator</a
+          >
+        </div>
+
+        <hr class="my-6" />
+        <div>
+          <a href="{% url 'blog'  %}" class="block text-[16px] mb-4">Blog</a>
+          <a href="{% url 'privacy-policy'  %}" class="text-[16px]"
+            >Privacy Policy</a
+          >
+        </div>
+      </div>
+
+      <div class="bg-yellow-400 flex justify-center py-4">
+        <h2 class="flex mb-4 text-[14px] font-semibold items-center">
+          <img
+            class="mr-4 w-8"
+            src="{%static 'imgs/cheezious/darkLogo.png'%}"
+            alt="Cheezious"
+          />
+          Cheezious Hotline
+          <img
+            class="ml-4"
+            src="{%static 'imgs/cheezious/phone.svg'%}"
+            alt="phone"
+          />
+        </h2>
+      </div>
+    </div>
+    {% block content %} {% endblock %}
+
+    <footer class="absolute bg-yellow-400 bottom-100  w-full">
+      <div
+        class="bg-yellow-400 py-10 flex flex-col justify-center items-center"
+      >
+        <div class="flex justify-center items-center">
+          <img class="w-8 h-8 mr-2 " src="{% static "imgs/cheezious/darkLogo.png"%}" alt="">
+          <p>Cheezious Copyright © 2024. All Rights Reserved.</p>
+        </div>
+        <div class="flex mt-4">
+          <a href=""> TERMS & CONDITIONS | PRIVACY POLICY </a>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      const menuBtn = document.querySelector("#menuBtn");
+      const menu = document.querySelector("#menu");
+      const body = document.body;
+
+      // Create overlay element
+      const overlay = document.createElement("div");
+      overlay.classList.add("menu-overlay", "hidden");
+      document.body.appendChild(overlay);
+
+      // Add necessary CSS
+      const style = document.createElement("style");
+      style.textContent = `
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(2px);
+                z-index: 30;  /* Lower z-index than menu */
+            }
+            
+            /* Ensure menu has higher z-index */
+            #menu {
+                z-index: 40;
+                position: fixed;  /* or fixed, depending on your layout */
+            }
+            
+            .no-scroll {
+                overflow: hidden;
+            }
+
+                /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+      .slider-container {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Adjust according to your image sizes */
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: all 0.5s ease;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  display: none; /* Initially hide all images */
+}
+        `;
+      document.head.appendChild(style);
+
+      // Initialize menu state
+      menu.classList.add("hidden");
+      gsap.set(menu, { x: "-100%" });
+
+      // Function to open menu
+      function openMenu() {
+        overlay.classList.remove("hidden");
+        menu.classList.remove("hidden");
+        body.classList.add("no-scroll");
+
+        gsap.to(menu, {
+          x: "0%",
+          duration: 0.4,
+          display: "flex",
+        });
+
+        gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.4 });
+      }
+
+      // Function to close menu
+      function closeMenu() {
+        gsap.to(menu, {
+          x: "-100%",
+          duration: 0.4,
+          onComplete: () => {
+            menu.classList.add("hidden");
+          },
+        });
+
+        gsap.to(overlay, {
+          opacity: 0,
+          duration: 0.4,
+          onComplete: () => {
+            overlay.classList.add("hidden");
+            body.classList.remove("no-scroll");
+          },
+        });
+      }
+
+      menuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+
+        if (menu.classList.contains("hidden")) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      });
+
+      // Handle clicks outside the menu
+      overlay.addEventListener("click", (e) => {
+        if (!menu.contains(e.target) && e.target !== menuBtn) {
+          closeMenu();
+        }
+      });
+
+      // Prevent menu clicks from closing
+      menu.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+
+      // Handle escape key
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !menu.classList.contains("hidden")) {
+          closeMenu();
+        }
+      });
+
+      // Select all the images
+      const images = document.querySelectorAll("#slider img");
+      let currentIndex = 0;
+
+      // Function to show the next image
+      function showNextImage() {
+        // Fade out the current image
+        gsap.to(images[currentIndex], {
+          opacity: 0,
+          duration: 0.1,
+          display: "none",
+        });
+
+        // Update the index to the next image
+        currentIndex = (currentIndex + 1) % images.length;
+
+        // Fade in the next image
+        gsap.to(images[currentIndex], {
+          opacity: 1,
+          duration: 0.1,
+          display: "block",
+        });
+      }
+
+      // Initialize the slider with the first image visible
+      gsap.to(images[0], { opacity: 1, duration: 1, display: "block" });
+
+      // Set the slider to change images every 3 seconds
+      setInterval(showNextImage, 3000);
+      // Scroll container variables
+      const container = document.getElementById("scrollContainer"); // Changed ID to match HTML
+      const scrollAmount = 200;
+      let scrollIndex = 0; // Renamed from currentIndex
+      const totalItems = container?.children.length || 0;
+
+      function scrollRight() {
+        if (container) {
+          if (scrollIndex >= totalItems - 4) {
+            container.scrollLeft = 0;
+            scrollIndex = 0;
+          } else {
+            scrollIndex++;
+            container.scrollLeft += scrollAmount;
+          }
+        }
+      }
+
+      function scrollLeft() {
+        if (container) {
+          if (scrollIndex <= 0) {
+            scrollIndex = totalItems - 4;
+            container.scrollLeft = scrollIndex * scrollAmount;
+          } else {
+            scrollIndex--;
+            container.scrollLeft -= scrollAmount;
+          }
+        }
+      }
+
+      // Initialize scroll position only if container exists
+      if (container) {
+        container.scrollLeft = 0;
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const container9 = document.getElementById("menuContainer9");
+        const prevBtn9 = document.getElementById("prevBtn9");
+        const nextBtn9 = document.getElementById("nextBtn9");
+        const scrollAmount = 200;
+      
+        prevBtn9.addEventListener("click", () => {
+          container9.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        });
+      
+        nextBtn9.addEventListener("click", () => {
+          container9.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        });
+      });
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+{% extends "base.html"%} {% load static %} {% block content %}
+<div>
+  <div class="relative w-full mx-auto overflow-hidden">
+    <div
+      id="slider"
+      class="flex gap-4 overflow-x-scroll no-scrollbar scroll-smooth"
+    >
+      <!-- Replace these with your image paths -->
+      <img src="{% static 'imgs/cheezious/sider1.webp' %}" alt="Image 1" />
+      <img src="{% static 'imgs/cheezious/slider2.webp' %}" alt="Image 2" />
+      <img src="{% static 'imgs/cheezious/slider3.webp' %}" alt="Image 3" />
+      <img src="{% static 'imgs/cheezious/slider4.webp' %}" alt="Image 4" />
+      <img src="{% static 'imgs/cheezious/slider5.webp' %}" alt="Image 5" />
+    </div>
+  </div>
+
+  <div class="md:mx-32 md:mt-10 ">
+    <div class="flex justify-between items-center">
+      <h2 class="text-[28px] font-semibold">Explore Menu</h2>
+      <a href="{% url 'menu' %}" class="ml-auto font-bold text-[#f15a26]">View All</a>
+    </div>
+    <div class="block p-4 my-6 py-6">
+      <div class="relative max-w-[100%] mx-auto">
+        <!-- Right Button -->
+        <button
+          onclick="scrollRight()"
+          class="w-8 h-8 rounded absolute right-[-16px] top-1/2 -translate-y-1/2 flex justify-center items-center shadow-lg bg-white z-10"
+        >
+          <i class="fa-solid fa-chevron-right text-[#f15a26]"></i>
+        </button>
+
+        <!-- Scrollable container -->
+        <div
+          id="scrollContainer"
+          class="flex gap-8 overflow-x-hidden scroll-smooth"
+        >
+          <div class="w-60 h-60 bg-black flex-shrink-0">1</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">2</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">3</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">4</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">5</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">6</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">7</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">8</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">9</div>
+          <div class="w-60 h-60 bg-black flex-shrink-0">10</div>
+        </div>
+
+        <!-- Left Button -->
+        <button
+          onclick="scrollLeft()"
+          class="w-8 h-8 rounded absolute left-[-16px] top-1/2 -translate-y-1/2 flex justify-center items-center shadow-lg bg-white z-10"
+        >
+          <i class="fa-solid fa-chevron-left text-[#f15a26]"></i>
+        </button>
+      </div>
+
+      <div class="block gap-4 mt-20 items-center justify-around md:flex">
+        <div>
+          <img class="w-[348px] h-[348px]" src="{% static "imgs/cheezious/e1.webp" %}" alt="">
+          <h1 class="font-medium text-[24px]">Delivering Chzeey khushiyan</h1>
+        </div>
+        <div>
+          <img class="w-[348px] h-[348px]" src="{% static "imgs/cheezious/e3.webp" %}" alt="">
+          <h1 class="font-medium text-[24px]">
+            Fastest Growing Brand of the Year
+          </h1>
+        </div>
+        <div>
+          <img class="w-[348px] h-[348px] rounded-2xl" src="{% static "imgs/cheezious/e22.webp" %}" alt="">
+          <h1 class="font-medium text-[24px] w-[70%]">
+            Made with fresh, local ingredients and love
+          </h1>
+        </div>
+      </div>
+
+      <div class="block my-32">
+        <!-- Background Image -->
+        <div class="absolute hidden md:block">
+          <img
+            src="{% static 'imgs/cheezious/mobileapp.svg' %}"
+            alt="Mobile App Image"
+          />
+        </div>
+
+        <!-- Content Section -->
+        <div class="relative md:left-[30%] md:top-52">
+          <h2 class="text-[1.5rem] font-semibold">Download Our Mobile App</h2>
+          <p class="text-[1.5rem] font-normal pt-4 w-[70%]">
+            Elevate your experience by downloading our mobile app for a seamless
+            ordering experience.
+          </p>
+
+          <!-- Avatar and Download Buttons -->
+          <div class="md:flex items-center gap-8 mt-8">
+            <!-- Avatar Image -->
+            <img
+              src="{% static 'imgs/cheezious/avatar.svg' %}"
+              alt="Avatar Image"
+            />
+
+            <!-- App Store Links -->
+            <div class="flex gap-4 mt-4">
+              <img
+                src="{% static 'imgs/cheezious/googleplay.svg' %}"
+                alt="Google Play Store"
+              />
+              <img
+                src="{% static 'imgs/cheezious/apple.svg' %}"
+                alt="Apple App Store"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-[40%]">
+        <div class="flex justify-between items-center">
+          <h2 class="text-[28px] font-semibold">Explore Menu</h2>
+          <a href="{% url 'menu' %}" class="ml-auto font-bold text-[#f15a26]">View All</a>
+        </div>
+        <div class="flex gap-4 mt-10">
+          <div class="relative my-6 w-[32%]">
+            <img src="{% static "imgs/cheezious/PakistaniBrand.webp" %}" alt="">
+            <div
+              class="absolute px-1 flex flex-col justify-between bg-black/60 w-[97%] h-28 top-[68%] font-normal text-[1rem] text-white"
+            >
+              <h2>Cheezious: The Awami Brand That's All About Local Love</h2>
+              <div class="flex justify-between pb-2">
+                <p>Learn more</p>
+                <img class="w-6 h-6" src="{% static "imgs/cheezious/arrow.png"%}" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="relative   my-6 w-[32%]">
+            <img src="{% static "imgs/cheezious/PakistaniBrand.webp" %}" alt="">
+            <div
+              class="absolute px-1 flex flex-col justify-between bg-black/60 w-[97%] h-28 top-[68%] font-normal text-[1rem] text-white"
+            >
+              <h2>Cheezious: The Awami Brand That's All About Local Love</h2>
+              <div class="flex justify-between pb-2">
+                <p>Learn more</p>
+                <img class="w-6 h-6" src="{% static "imgs/cheezious/arrow.png"%}" alt="">
+              </div>
+            </div>
+          </div>
+          <div class="relative my-6 w-[32%]">
+            <img src="{% static "imgs/cheezious/PakistaniBrand.webp" %}" alt="">
+            <div
+              class="absolute px-1 flex flex-col justify-between bg-black/60 w-[97%] h-28 top-[68%] font-normal text-[1rem] text-white"
+            >
+              <h2>Cheezious: The Awami Brand That's All About Local Love</h2>
+              <div class="flex justify-between pb-2">
+                <p>Learn more</p>
+                <img class="w-6 h-6" src="{% static "imgs/cheezious/arrow.png"%}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="w-[100vw] h-full relative mb-0">
+    <img class=" w-full h-full hidden md:block " src="{% static "imgs/cheezious/offer.svg" %}" alt="img">
+    <div class="md:absolute md:top-[15%] md:left-[5%]">
+      <h2 class="text-[2rem] w-38 font-bold text-[#f15a26]">Special Offers & <br> News</h2>
+      <p class="text-[1.5rem] font-normal py-4 md:w-[70%]">
+        Elevate your experience by downloading our mobile app for a seamless
+        ordering experience.
+      </p>
+        <input
+            type="email"
+            placeholder="Enter your email"
+            class="md:w-[50%] h-16 mt-4 px-12 rounded-xl"
+            />
+      <button class="block text-black px-4 py-2  mt-4 bg-[linear-gradient(90deg,_rgb(253,240,88)_0%,_rgb(255,203,5)_100%)] uppercase rounded-xl mb-4">Subscribe</button>
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

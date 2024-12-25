@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+    
+    {% if cart_items %}
+    <div class="bg-white shadow-lg rounded-lg">
+        <div class="p-6 space-y-6">
+            {% for cart_item in cart_items %}
+            <div class="flex items-center justify-between border-b pb-6" id="cart-item-{{ cart_item.item.id }}">
+                <div class="flex items-center space-x-4">
+                    {% if cart_item.item.image %}
+                    <img src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" class="w-24 h-24 object-cover rounded-lg">
+                    {% endif %}
+                    <div>
+                        <h3 class="text-lg font-semibold">{{ cart_item.item.name }}</h3>
+                        <p class="text-gray-600">Rs{{ cart_item.item.price }}</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center border rounded-lg">
+                        <button class="px-3 py-1 border-r update-quantity" data-item="{{ cart_item.item.id }}" data-action="decrease">-</button>
+                        <span class="px-4 quantity">{{ cart_item.quantity }}</span>
+                        <button class="px-3 py-1 border-l update-quantity" data-item="{{ cart_item.item.id }}" data-action="increase">+</button>
+                    </div>
+                    
+                    <div class="text-lg font-semibold" id="item-total-{{ cart_item.item.id }}">
+                        Rs{{ cart_item.get_total }}
+                    </div>
+                    
+                    <button class="text-red-600 remove-item" data-item="{{ cart_item.item.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="bg-gray-50 px-6 py-4 rounded-b-lg">
+            <div class="flex justify-between items-center">
+                <span class="text-lg font-semibold">Total:</span>
+                <span class="text-2xl font-bold text-red-600" id="cart-total">Rs{{ cart.get_total }}</span>
+                <a href="{% url 'checkout' %}" class="hover:bg-yellow-400 text-black border px-6 py-2 rounded-lg">Checkout</a>
+            </div>
+        </div>
+        
+    </div>
+    {% else %}
+    <div class="text-center py-12">
+        <p class="text-xl text-gray-600">Your cart is empty</p>
+        <a href="{% url 'menu' %}" class="mt-4 inline-block bg-red-600 text-black px-6 py-2 rounded-lg">Continue Shopping</a>
+
+    </div>
+
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update quantity handlers
+    document.querySelectorAll('.update-quantity').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.item;
+            const action = this.dataset.action;
+            
+            fetch('{% url "update_cart_item" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: `item_id=${itemId}&action=${action}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const itemContainer = document.getElementById(`cart-item-${itemId}`);
+                    const quantityElement = itemContainer.querySelector('.quantity');
+                    const itemTotalElement = document.getElementById(`item-total-${itemId}`);
+                    const cartTotalElement = document.getElementById('cart-total');
+                    
+                    if (action === 'increase') {
+                        quantityElement.textContent = parseInt(quantityElement.textContent) + 1;
+                    } else {
+                        quantityElement.textContent = parseInt(quantityElement.textContent) - 1;
+                    }
+                    
+                    itemTotalElement.textContent = `Rs${data.item_total}`;
+                    cartTotalElement.textContent = `Rs${data.cart_total}`;
+                } else if (data.status === 'removed') {
+                    const itemContainer = document.getElementById(`cart-item-${itemId}`);
+                    itemContainer.remove();
+                    
+                    const cartTotalElement = document.getElementById('cart-total');
+                    cartTotalElement.textContent = `Rs${data.cart_total}`;
+                    
+                    if (data.cart_items_count === 0) {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    });
+    
+    // Remove item handlers
+    document.querySelectorAll('.remove-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.item;
+            
+            fetch('{% url "remove_from_cart" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: `item_id=${itemId}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const itemContainer = document.getElementById(`cart-item-${itemId}`);
+                    itemContainer.remove();
+                    
+                    const cartTotalElement = document.getElementById('cart-total');
+                    cartTotalElement.textContent = `Rs${data.cart_total}`;
+                    
+                    if (data.cart_items_count === 0) {
+                        location.reload();
+                    }
+                }
+            });
+        });
+    });
+    
+    // CSRF token helper function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+
+{% endblock %}

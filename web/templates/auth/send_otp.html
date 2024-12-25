@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    <label for="mobile_number">Mobile Number:</label>
+    <input type="text" name="mobile_number" required>
+    <button type="submit">Send OTP</button>
+</form>

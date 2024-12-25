@@ -1,0 +1,44 @@
+{% load static  tailwind_tags%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% tailwind_css %}
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+    <title>Document</title>
+</head>
+<body>
+    <div class="flex h-screen w-full"> 
+        <img class="w-36 mb-8 absolute top-4 left-8" src="{% static 'imgs/cheezious/mainLogo.png' %}" alt="Cheezious Logo">
+        <!-- Left Section -->
+        <div class="w-[60%] bg-white flex flex-col justify-center items-center px-10">
+         
+          <h1 class="text-2xl font-bold mb-4">Hey there, feeling hungry?</h1>
+          <p class="text-gray-600 mb-8 text-center">
+            Let’s enjoy your food with cheezious!
+          </p>
+          <button class="w-full max-w-sm flex items-center justify-center bg-yellow-400 py-3 rounded-lg text-black uppercase font-semibold mb-4 hover:bg-gray-400 transition-all">
+            <i class="fa-solid fa-phone mr-2"></i>
+            Continue with Phone
+          </button>
+          <a href="{% url "signin"%}" class="w-full max-w-sm flex items-center justify-center bg-white py-3 rounded-lg border border-black text-black uppercase font-semibold  hover:bg-[#F15A26] transition-all">
+            <i class="fa-solid fa-user-group mr-2"></i>
+            Continue as a Guest
+          </a>
+        </div>
+      
+        <!-- Right Section -->
+        <div class="w-[40%] flex ">
+          <img class="h-full object-cover" src="{% static 'imgs/cheezious/deliveryMan.webp' %}" alt="Delivery Man">
+        </div>
+      </div>
+      
+
+    
+</body>
+</html>

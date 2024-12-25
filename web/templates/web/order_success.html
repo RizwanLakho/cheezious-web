@@ -1,0 +1,47 @@
+
+{# templates/order_success.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 py-12 text-center">
+    <svg class="w-16 h-16 text-green-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+    
+    <h1 class="text-3xl font-bold mb-4">Order Placed Successfully!</h1>
+    <p class="text-gray-600 mb-8">Your order number is: {{ order.id }}</p>
+    
+    <div class="bg-white shadow rounded-lg p-6 text-left">
+        <h2 class="text-xl font-semibold mb-4">Order Details</h2>
+        <div class="space-y-4">
+            <div>
+                <p class="font-medium">Shipping To:</p>
+                <p>{{ order.full_name }}</p>
+                <p>{{ order.address }}</p>
+                <p>{{ order.city }}</p>
+            </div>
+            
+            <div class="border-t pt-4">
+                <p class="font-medium mb-2">Items:</p>
+                {% for item in order.items.all %}
+                <div class="flex justify-between">
+                    <span>{{ item.item.name }} x {{ item.quantity }}</span>
+                    <span>Rs{{ item.price }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="border-t pt-4">
+                <div class="flex justify-between font-bold">
+                    <span>Total</span>
+                    <span>Rs{{ order.total_amount }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <a href="{% url 'home' %}" class="mt-8 inline-block bg-red-600 text-white px-6 py-2 rounded-lg">
+        Continue Shopping
+    </a>
+</div>
+{% endblock %}
