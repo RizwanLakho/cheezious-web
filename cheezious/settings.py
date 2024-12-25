@@ -27,10 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-e%c%y1v-t^v^2ndvq5_65vo$3r!thrbnfg!o@8pigm&)kna)dm"
+# DEBUG = getenv("DEBUG", "False") == "True"
+DEBUG = False
+ALLOWED_HOSTS = [".railway.app"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if DEBUG:
+    ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 
 
 # Application definition
