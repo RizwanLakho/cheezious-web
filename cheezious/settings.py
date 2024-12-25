@@ -11,7 +11,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
+from os import getenv
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+# Replace the DATABASES section of your settings.py with this
+tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +31,6 @@ SECRET_KEY = "django-insecure-e%c%y1v-t^v^2ndvq5_65vo$3r!thrbnfg!o@8pigm&)kna)dm
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
-ALLOWED_HOSTS = ["Cheezious-web.onrender.com"]
 
 
 # Application definition
@@ -44,7 +48,6 @@ INSTALLED_APPS = [
     "django_browser_reload",
 ]
 TAILWIND_APP_NAME = "theme"  # This is the name of the app that will be used to generate the tailwind files
-INTERNAL_IPS = ["127.0.0.1"]
 
 
 MIDDLEWARE = [
@@ -85,8 +88,8 @@ WSGI_APPLICATION = "cheezious.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": tmpPostgres.path.replace("/", ""),
     }
 }
 
